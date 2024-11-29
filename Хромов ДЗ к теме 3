@@ -1,0 +1,105 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 66,
+   "id": "67ace648-3972-4cd2-922e-e84b3930c8d8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "6\n",
+      "10\n"
+     ]
+    }
+   ],
+   "source": [
+    "def sum_distance(start, finish):\n",
+    "    \n",
+    "    if start < finish:\n",
+    "        start_number = start\n",
+    "        finish_number = finish\n",
+    "    else:\n",
+    "        start_number = finish\n",
+    "        finish_number = start\n",
+    "\n",
+    "    return sum(range(start_number, finish_number + 1))\n",
+    "\n",
+    "print(sum_distance(1,3))\n",
+    "print(sum_distance(1,4))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 100,
+   "id": "d5b17958-69d9-4939-bd5d-cd50de64ea72",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "llo\n",
+      "llo\n",
+      "llo\n",
+      "money\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'money'"
+      ]
+     },
+     "execution_count": 100,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "def trim_and_repeat(string_for_cut, offset=0, repetitions=1):\n",
+    "    \n",
+    "    string_for_cut = string_for_cut[offset:]\n",
+    "\n",
+    "    for _ in range(repetitions):\n",
+    "        print(string_for_cut)\n",
+    "\n",
+    "    return string_for_cut\n",
+    "\n",
+    "trim_and_repeat(\"Hello\", 2, 3)\n",
+    "trim_and_repeat(\"money\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ba3be51b-021c-4445-b4e2-5e9a749a9c60",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
