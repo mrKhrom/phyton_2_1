@@ -1,0 +1,184 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "67ace648-3972-4cd2-922e-e84b3930c8d8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Первые 5 постов:\n",
+      "\n",
+      "Пост 1:\n",
+      "Заголовок: sunt aut facere repellat provident occaecati excepturi optio reprehenderit\n",
+      "Тело: quia et suscipit\n",
+      "suscipit recusandae consequuntur expedita et cum\n",
+      "reprehenderit molestiae ut ut quas totam\n",
+      "nostrum rerum est autem sunt rem eveniet architecto\n",
+      "----------------------------------------\n",
+      "Пост 2:\n",
+      "Заголовок: qui est esse\n",
+      "Тело: est rerum tempore vitae\n",
+      "sequi sint nihil reprehenderit dolor beatae ea dolores neque\n",
+      "fugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\n",
+      "qui aperiam non debitis possimus qui neque nisi nulla\n",
+      "----------------------------------------\n",
+      "Пост 3:\n",
+      "Заголовок: ea molestias quasi exercitationem repellat qui ipsa sit aut\n",
+      "Тело: et iusto sed quo iure\n",
+      "voluptatem occaecati omnis eligendi aut ad\n",
+      "voluptatem doloribus vel accusantium quis pariatur\n",
+      "molestiae porro eius odio et labore et velit aut\n",
+      "----------------------------------------\n",
+      "Пост 4:\n",
+      "Заголовок: eum et est occaecati\n",
+      "Тело: ullam et saepe reiciendis voluptatem adipisci\n",
+      "sit amet autem assumenda provident rerum culpa\n",
+      "quis hic commodi nesciunt rem tenetur doloremque ipsam iure\n",
+      "quis sunt voluptatem rerum illo velit\n",
+      "----------------------------------------\n",
+      "Пост 5:\n",
+      "Заголовок: nesciunt quas odio\n",
+      "Тело: repudiandae veniam quaerat sunt sed\n",
+      "alias aut fugiat sit autem sed est\n",
+      "voluptatem omnis possimus esse voluptatibus quis\n",
+      "est aut tenetur dolor neque\n",
+      "----------------------------------------\n"
+     ]
+    }
+   ],
+   "source": [
+    "import requests\n",
+    "\n",
+    "def fetch_posts():\n",
+    "    \n",
+    "    # URL для API JSONPlaceholder\n",
+    "    url = \"https://jsonplaceholder.typicode.com/posts\"\n",
+    "    \n",
+    "    try:\n",
+    "        response = requests.get(url)\n",
+    "        response.raise_for_status()  # Проверка на ошибки\n",
+    "        \n",
+    "        # Извлекаем данные в формате JSON\n",
+    "        posts = response.json()\n",
+    "        \n",
+    "        # Вывод заголовков и тел первых 5 постов\n",
+    "        print(\"Первые 5 постов:\\n\")\n",
+    "        for i, post in enumerate(posts[:5], start=1):\n",
+    "            print(f\"Пост {i}:\")\n",
+    "            print(f\"Заголовок: {post['title']}\")\n",
+    "            print(f\"Тело: {post['body']}\")\n",
+    "            print(\"-\" * 40)\n",
+    "    \n",
+    "    except requests.exceptions.RequestException as e:\n",
+    "        print(f\"Ошибка при выполнении запроса: {e}\")\n",
+    "\n",
+    "# Запуск функции\n",
+    "if __name__ == \"__main__\":\n",
+    "    fetch_posts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "a94aa917-4468-40b8-8f77-8a7651bbdf9d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdin",
+     "output_type": "stream",
+     "text": [
+      "Введите название города на английском:  New York\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Ошибка подключения: 401 Client Error: Unauthorized for url: https://api.openweathermap.org/data/2.5/weather?q=New+York&appid=f115507af6a373e6c3670a604bf703db&units=metric&lang=ru\n"
+     ]
+    }
+   ],
+   "source": [
+    "import requests\n",
+    "\n",
+    "def get_weather(city_name, api_key):\n",
+    "    \"\"\"\n",
+    "    Получает данные о погоде для заданного города с использованием API OpenWeather.\n",
+    "    \"\"\"\n",
+    "    # Базовый URL для API OpenWeather\n",
+    "    url = \"https://api.openweathermap.org/data/2.5/weather\"\n",
+    "    \n",
+    "    params = {\n",
+    "        'q': city_name,       # Название города\n",
+    "        'appid': api_key,     # Ваш API-ключ\n",
+    "        'units': 'metric',    # Единицы измерения (градусы Цельсия)\n",
+    "        'lang': 'ru'          # Язык ответа (русский)\n",
+    "    }\n",
+    "    \n",
+    "    try:\n",
+    "\n",
+    "        response = requests.get(url, params=params)\n",
+    "        response.raise_for_status()  # Проверяем успешность запроса\n",
+    "        \n",
+    "        data = response.json()\n",
+    "        \n",
+    "        # Извлекаем интересующие данные\n",
+    "        temperature = data['main']['temp']\n",
+    "        description = data['weather'][0]['description']\n",
+    "        \n",
+    "        print(f\"Город: {city_name}\")\n",
+    "        print(f\"Температура: {temperature}°C\")\n",
+    "        print(f\"Описание погоды: {description}\")\n",
+    "    \n",
+    "    except requests.exceptions.RequestException as e:\n",
+    "        print(f\"Ошибка подключения: {e}\")\n",
+    "    except KeyError:\n",
+    "        print(\"Невозможно получить данные о погоде для указанного города.\")\n",
+    "\n",
+    "# Основная часть программы\n",
+    "if __name__ == \"__main__\":\n",
+    "    \n",
+    "    api_key = \"f115507af6a373e6c3670a604bf703db\"\n",
+    "    \n",
+    "    # Ввод города пользователем\n",
+    "    city_name = input(\"Введите название города на английском: \").strip()\n",
+    "    \n",
+    "    # Получение данных о погоде\n",
+    "    get_weather(city_name, api_key)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "401ebe0d-b0f5-4941-bfe8-d4e46a9e709f",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
